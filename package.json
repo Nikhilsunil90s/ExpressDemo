@@ -1,0 +1,27 @@
+{
+  "name": "expressdemo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "controller.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon controller.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nikhilsunil90s/ExpressDemo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nikhilsunil90s/ExpressDemo/issues"
+  },
+  "homepage": "https://github.com/Nikhilsunil90s/ExpressDemo#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1"
+  }
+}

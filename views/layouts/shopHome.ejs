@@ -1,0 +1,37 @@
+<%- include('../includes/head') %>
+<%- include('../includes/navigation') %>
+<div class="container">
+
+    <h1 style="text-align: center;color:aqua">Welcome To The Shop!</h1>
+    <hr>
+    <% if (Products.length> 0) { %>
+        <ul>
+            <% for (let product of Products) { %>
+                <li>
+                    <% if(product.prodName==='Book' ) { %>
+                        <h1>
+                            <%= product.prodName %>
+                        </h1>
+                        <hr>
+                        <img src="/images/check.jpg" alt="Book" height="150" width="150">
+                        <hr>
+                        <h2>Price : <%= product.prodPrice %>
+                        </h2>
+                        <% } else { %>
+                            <h1>
+                                <%= product.prodName %>
+                            </h1>
+                            <hr>
+                            <h2>Price : <%= product.prodPrice %>
+                            </h2>
+                            <% } %>
+                </li>
+                <% } %>
+        </ul>
+        <% } else { %>
+            <pre><h3 class = 'centerClass'>No Products Available Here!</h3></pre>
+            <% } %>
+</div>
+
+
+<%- include('../includes/end') %>

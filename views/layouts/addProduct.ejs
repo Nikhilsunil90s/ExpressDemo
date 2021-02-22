@@ -1,0 +1,16 @@
+<%- include('../includes/head')%>
+<%- include('../includes/navigation') %>
+<div class="container">
+    <h1 style="text-align: center;color:aqua">Add Products To The Shop!</h1>
+    <hr>
+    <div style="text-align: center;">
+    <form action="/admin/addProduct" method="POST">
+        <input type="text" placeholder="Enter Product Name..." name="prodName">
+        <br>
+        <input type="text" placeholder="Enter Price" name="prodPrice">
+        <br>
+        <input type="submit" value="Okay!">
+    </form>
+    </div>
+</div>
+<%- include('../includes/end')%>

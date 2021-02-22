@@ -1,0 +1,14 @@
+.centerClass {
+    text-align: center;
+    color: red;
+}
+
+.ulClass li {
+    text-decoration: none;
+    float: left;
+    margin-left: 5px;
+}
+
+a {
+    cursor: grabbing;
+}
