@@ -1,0 +1,16 @@
+### User Views
+# 1. Index
+# 2. Products-List
+# 3. Product-Detail 
+# 4. Cart
+# 5. Checkout
+
+### Error View
+
+### Admin Views
+# 1. Product-List ---> Edit/Delete/Update
+# 2. Product-Add
+
+### Product Model
+Schema --- Id, Name, Description, Image
+

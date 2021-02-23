@@ -12,6 +12,7 @@ adminRoutes.get('/addProduct' , productController.getAddProducts);
 adminRoutes.post('/addProduct' , productController.postAddProducts);
 
 
+
 // module.exports = Products;
 // module.exports = adminRoutes; // must come in the end!!!!
 

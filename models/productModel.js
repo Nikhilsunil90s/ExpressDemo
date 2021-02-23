@@ -1,9 +1,11 @@
 const Products = [];
 
 module.exports = class Product {
-    constructor(title , price) {
+    constructor(title , price, desc) {
+        this.prodId = parseInt(Math.random() * 100); // 
         this.prodName = title;
         this.prodPrice = price;
+        this.prodDescription = desc
     }
 
     save() {
@@ -13,6 +15,7 @@ module.exports = class Product {
 
     static fetch() {
         return Products;
-    }
+    } 
+    
 
 }

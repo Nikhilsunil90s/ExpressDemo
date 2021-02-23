@@ -4,5 +4,10 @@ const productController = require('../controllers/productcontroller');
 
 userRoutes.get('/' , productController.showProducts);
 
+userRoutes.get('/product/getratings', )
+
+userRoutes.get('/product/:prodId' , productController.getDetails);
+
+
 module.exports = userRoutes;
 

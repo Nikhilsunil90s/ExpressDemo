@@ -19,14 +19,26 @@
                             <h2>Price : <%= product.prodPrice %>
                             </h2>
                             <% } else { %>
-                                <h1>
-                                    <%= product.prodName %>
-                                </h1>
+                                <div class="card">
+                                    <div class="card-header text-center">
+                                        <h1>
+                                            <%= product.prodName %>
+                                        </h1>
+                                    </div>
+                                    <div class="card-body">
+                                        <img src="<%= imageSRC %>" alt="<%= product.prodName%>"/>
+                                    </div>
+                                    <div class="card-footer">
+                                        <h2>Price : <%= product.prodPrice %>
+                                        </h2>
+                                    </div>
+                                </div>
+                                
                                 <hr>
-                                <h2>Price : <%= product.prodPrice %>
-                                </h2>
+                                
                                 <% } %>
                     </li>
+                    <a type="btn btn-success" href="/product/<%= product.prodId %>">Details</a>
                     <% } %>
             </ul>
             <% } else { %>
