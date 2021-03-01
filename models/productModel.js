@@ -1,4 +1,4 @@
-const Products = [];
+const data = require('../utils/database');
 
 module.exports = class Product {
     constructor(title , price, desc) {
@@ -14,8 +14,14 @@ module.exports = class Product {
     }
 
     static fetch() {
-        return Products;
-    } 
+        return data.execute('select * from nodetable')
+                   .then(results => {
+                        console.log(results[0]);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+        } 
     
 
 }
