@@ -9,19 +9,16 @@ module.exports = class Product {
     }
 
     save() {
-        Products.push(this);
-        console.log(Products);
+        return data.execute('insert into nodetable (prodId , prodName, prodPrice, prodDesc) values (?,?,?,?)' , 
+        [this.prodId, this.prodName , this.prodPrice , this.prodDescription])
     }
 
     static fetch() {
-        return data.execute('select * from nodetable')
-                   .then(results => {
-                        console.log(results[0]);
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
+        return data.execute('select * from nodetable');
         } 
     
+    static fetchById(id){
+        return data.execute('select * from nodetable where prodId = ?' , [id,])
+    }
 
 }

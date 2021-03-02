@@ -9,24 +9,15 @@
             <ul>
                 <% for (let product of Products) { %>
                     <li>
-                        <% if(product.prodName==='Book' ) { %>
-                            <h1>
-                                <%= product.prodName %>
-                            </h1>
-                            <hr>
-                            <img src="/images/check.jpg" alt="Book" height="150" width="150">
-                            <hr>
-                            <h2>Price : <%= product.prodPrice %>
-                            </h2>
-                            <% } else { %>
                                 <div class="card">
                                     <div class="card-header text-center">
                                         <h1>
                                             <%= product.prodName %>
                                         </h1>
+                                        <pre> <%= product.prodDesc %> </pre>
                                     </div>
                                     <div class="card-body">
-                                        <img src="<%= imageSRC %>" alt="<%= product.prodName%>"/>
+                                        <img src="<%= imageSRC %>" alt="<%= product.prodName %>"/>
                                     </div>
                                     <div class="card-footer">
                                         <h2>Price : <%= product.prodPrice %>
@@ -35,8 +26,6 @@
                                 </div>
                                 
                                 <hr>
-                                
-                                <% } %>
                     </li>
                     <a type="btn btn-success" href="/product/<%= product.prodId %>">Details</a>
                     <% } %>
