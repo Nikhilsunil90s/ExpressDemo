@@ -27,13 +27,22 @@ exports.getDetails = (req,res,next) =>{
 exports.postAddProducts = (req,res) => {
     //console.log(req.body);
     //res.send("<h1>Products Added!</h1>");
-    const prod = new Product(req.body.prodName , req.body.prodPrice, req.body.prodDescription);
-    prod.save()
-        .then(() => {
-            res.redirect('/');
-        })
-        .catch(err => console.log(err));
-    
+    // const prod = new Product(req.body.prodName , req.body.prodPrice, req.body.prodDescription);
+    // prod.save()
+    //     .then(() => {
+    //         res.redirect('/');
+    //     })
+    //     .catch(err => console.log(err));
+    Product.create({
+        title: req.body.prodName,
+        price: req.body.prodPrice,
+        description: req.body.prodDescription,
+    })
+    .then((resp) => {
+        console.log(resp);
+        res.redirect('/');
+    })
+    .catch(err => console.log(err));
 };
 
 exports.showProducts = (req,res) => {

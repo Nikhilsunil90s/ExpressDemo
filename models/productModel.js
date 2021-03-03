@@ -1,24 +1,22 @@
-const data = require('../utils/database');
+const Sequelize = require('sequelize');
+const sequelize = require('../utils/database');
 
-module.exports = class Product {
-    constructor(title , price, desc) {
-        this.prodId = parseInt(Math.random() * 100); // 
-        this.prodName = title;
-        this.prodPrice = price;
-        this.prodDescription = desc
+const Product = sequelize.define('Products' , {
+    id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+    },
+    title: Sequelize.STRING,
+    price: {
+        type: Sequelize.DOUBLE,
+        allowNull: false,
+    },
+    description: {
+        type: Sequelize.STRING,
+        allowNull: false
     }
+});
 
-    save() {
-        return data.execute('insert into nodetable (prodId , prodName, prodPrice, prodDesc) values (?,?,?,?)' , 
-        [this.prodId, this.prodName , this.prodPrice , this.prodDescription])
-    }
-
-    static fetch() {
-        return data.execute('select * from nodetable');
-        } 
-    
-    static fetchById(id){
-        return data.execute('select * from nodetable where prodId = ?' , [id,])
-    }
-
-}
+module.exports = Product;

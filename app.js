@@ -2,6 +2,8 @@ const express = require('express');
 const errorController = require('./controllers/errorcontroller');
 const server = express();
 
+const sequelize = require('./utils/database');
+
 const adminRoutes = require('./routes/adminRoutes'); //adminRoutes and Products
 const userRoutes = require('./routes/userRoutes');
 
@@ -14,5 +16,11 @@ server.use(userRoutes);
 
 server.use(errorController.getError);
 
-server.listen(3000);
+sequelize.sync()
+         .then((result) => {
+            console.log(result);
+            server.listen(3000);
+         })
+         .catch(err => console.log(err));
+
 
