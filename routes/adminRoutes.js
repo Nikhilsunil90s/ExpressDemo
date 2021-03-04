@@ -11,6 +11,12 @@ adminRoutes.get('/addProduct' , productController.getAddProducts);
 
 adminRoutes.post('/addProduct' , productController.postAddProducts);
 
+adminRoutes.get('/list-products' , productController.showProducts);
+
+adminRoutes.get('/edit/:prodId' , productController.getEditProduct);
+
+adminRoutes.post('/edit/:prodId' , productController.postEditProduct);
+
 
 
 // module.exports = Products;

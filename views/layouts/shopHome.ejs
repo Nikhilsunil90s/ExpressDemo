@@ -1,8 +1,8 @@
 <%- include('../includes/head') %>
 <%- include('../includes/navigation') %>
 <div class="container">
-
-    <h1 style="text-align: center;color:aqua">Welcome To The Shop!</h1>
+<% if(!isAdmin) { %>
+    <h1 style="text-align: center;color:aqua">Welcome To The Shop! User</h1>
     <hr>
     <% if(Products) { %>
         <% if (Products.length> 0) { %>
@@ -12,28 +12,73 @@
                                 <div class="card">
                                     <div class="card-header text-center">
                                         <h1>
-                                            <%= product.prodName %>
+                                            <%= product.title %>
                                         </h1>
-                                        <pre> <%= product.prodDesc %> </pre>
+                                        <pre> <%= product.description %> </pre>
                                     </div>
                                     <div class="card-body">
                                         <img src="<%= imageSRC %>" alt="<%= product.prodName %>"/>
                                     </div>
                                     <div class="card-footer">
-                                        <h2>Price : <%= product.prodPrice %>
+                                        <h2>Price : <%= product.price %>
                                         </h2>
                                     </div>
                                 </div>
                                 
                                 <hr>
                     </li>
-                    <a type="btn btn-success" href="/product/<%= product.prodId %>">Details</a>
+                    <a type="btn btn-success" href="/product/<%= product.id %>">Details</a>
                     <% } %>
             </ul>
             <% } else { %>
                 <pre><h3 class = 'centerClass'>No Products Available Here!</h3></pre>
                 <% } %>
     <% } %>
+<% } else { %>
+    <h1 style="text-align: center;color:aqua">Welcome To The Shop! Admin</h1>
+    <hr>
+    <% if(Products) { %>
+        <% if (Products.length> 0) { %>
+            <ul>
+                <% for (let product of Products) { %>
+                    <li>
+                                <div class="card">
+                                    <div class="card-header text-center">
+                                        <h1>
+                                            <%= product.title %>
+                                        </h1>
+                                        <pre> <%= product.description %> </pre>
+                                    </div>
+                                    <div class="card-body">
+                                        <img src="<%= imageSRC %>" alt="<%= product.prodName %>"/>
+                                    </div>
+                                    <div class="card-action">
+                                        <div class="row text-center">
+                                            <div class="col-6">
+                                                <a class="btn btn-info" href="/admin/edit/<%= product.id %>">Edit!</a>
+                                            </div>
+                                            <div class="col-6">
+                                                <a class="btn btn-danger" href="">Delete!</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <h2>Price : <%= product.price %>
+                                        </h2>
+                                    </div>
+                                </div>
+                                
+                                <hr>
+                    </li>
+                    <a type="btn btn-success" href="/product/<%= product.id %>">Details</a>
+                    <% } %>
+            </ul>
+            <% } else { %>
+                <pre><h3 class = 'centerClass'>No Products Available Here!</h3></pre>
+                <% } %>
+    <% } %>
+<% } %>
+
 </div>
 
 
