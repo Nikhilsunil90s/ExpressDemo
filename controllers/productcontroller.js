@@ -1,10 +1,17 @@
 const { render } = require('ejs');
 const Product = require('../models/productModel');
+
+
 exports.getAddProducts = (req,res, next) => {
     //res.sendFile(path.join(__dirname, '..' , 'views' , 'addProduct.html'));
     //console.log('In Get Add Controller');
     res.render('layouts/addProduct' , {
-        'pageTitle': 'Add Products Here!' 
+        'exist' : false,
+        'pageTitle': 'Add Products Here!' ,
+        'prodId' : '',
+        'prodName': '',
+        'prodDesc': '',
+        'prodPrice': '',
     })
 };
 
@@ -34,6 +41,7 @@ exports.postAddProducts = (req,res) => {
     //         res.redirect('/');
     //     })
     //     .catch(err => console.log(err));
+    //console.log(req.url);
     Product.create({
         title: req.body.prodName,
         price: req.body.prodPrice,
@@ -68,15 +76,54 @@ exports.getEditProduct = (req,res) => {
     const idEdit = req.params.prodId;
     Product.findAll({where : {id : idEdit}})
            .then(product => {
-                return render('layouts/addProduct' , {
-                    prodName: product[0].title,
-                    prodDesc: product[0].description,
-                    prodPrice: product[0].price,
+               console.log(product[0].title);
+                res.render('layouts/addProduct' , {
+                    'exist' : true,
+                    'pageTitle' : 'Edit Product',
+                    'prodId' : product[0].id,
+                    'prodName': product[0].title,
+                    'prodDesc': product[0].description,
+                    'prodPrice': product[0].price,
                 })
            })
            .catch(err => console.log(err));
 }
 
 exports.postEditProduct = (req,res) => {
+    const idEdit = req.params.prodId;
+    // Product.findAll({where :{id : iEdit } })
+    //         .then(product=>{
+    //             product.update({
+    //                 'title' : req.body.prodName,
+    //                 'price': req.body.prodPrice,
+    //                 'description': req.body.prodDescription,
+    //             })
+    //         })
+    //         .catch(err => console.log(err));
+    Product.update({
+        title : req.body.prodName,
+        price: req.body.prodPrice,
+        description: req.body.prodDescription,
+    },
+    {
+        where:{
+            id : idEdit
+        }
+    })
+    .then((resp) => {
+        //console.log(resp);
+        res.redirect('/');
+    })
+    .catch(err => console.log(err));
     
+    //res.send('hello');
+}
+
+exports.deleteProduct = (req,res) => {
+    const idDelete = req.params.prodId;
+    Product.destroy({where : {id: idDelete}})
+            .then(
+                res.redirect('/')
+                )
+            .catch(err => console.log(err))
 }
