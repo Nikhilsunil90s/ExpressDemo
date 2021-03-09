@@ -46,12 +46,13 @@ exports.postAddProducts = (req,res) => {
         title: req.body.prodName,
         price: req.body.prodPrice,
         description: req.body.prodDescription,
+        userId: req.user.id
     })
     .then((resp) => {
         //console.log(resp);
         res.redirect('/');
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log(err))
 };
 
 exports.showProducts = (req,res) => {
@@ -91,6 +92,15 @@ exports.getEditProduct = (req,res) => {
 
 exports.postEditProduct = (req,res) => {
     const idEdit = req.params.prodId;
+    console.log(req.body);
+    Product.findByPk(idEdit).then(product => {
+        product.title = req.body.prodName;
+        product.price = req.body.prodPrice;
+        product.description = req.body.prodDescription;
+        product.save()
+        console.log('Product Updated!')
+        res.redirect('/')
+    }).catch(err => console.log(err))
     // Product.findAll({where :{id : iEdit } })
     //         .then(product=>{
     //             product.update({
@@ -100,21 +110,21 @@ exports.postEditProduct = (req,res) => {
     //             })
     //         })
     //         .catch(err => console.log(err));
-    Product.update({
-        title : req.body.prodName,
-        price: req.body.prodPrice,
-        description: req.body.prodDescription,
-    },
-    {
-        where:{
-            id : idEdit
-        }
-    })
-    .then((resp) => {
-        //console.log(resp);
-        res.redirect('/');
-    })
-    .catch(err => console.log(err));
+    // Product.update({
+    //     title : req.body.prodName,
+    //     price: req.body.prodPrice,
+    //     description: req.body.prodDescription,
+    // },
+    // {
+    //     where:{
+    //         id : idEdit
+    //     }
+    // })
+    // .then((resp) => {
+    //     //console.log(resp);
+    //     res.redirect('/');
+    // })
+    // .catch(err => console.log(err));
     
     //res.send('hello');
 }
@@ -122,8 +132,10 @@ exports.postEditProduct = (req,res) => {
 exports.deleteProduct = (req,res) => {
     const idDelete = req.params.prodId;
     Product.destroy({where : {id: idDelete}})
-            .then(
+            .then(() => {
+                console.log('Product Deleted...');
                 res.redirect('/')
-                )
+
+            })
             .catch(err => console.log(err))
 }
