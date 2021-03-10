@@ -46,7 +46,7 @@ exports.postAddProducts = (req,res) => {
         title: req.body.prodName,
         price: req.body.prodPrice,
         description: req.body.prodDescription,
-        userId: req.user.id
+        userId: req.user.id,
     })
     .then((resp) => {
         //console.log(resp);
