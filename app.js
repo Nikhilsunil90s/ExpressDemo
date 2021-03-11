@@ -8,14 +8,16 @@ const User = require('./models/userModel');
 const Cart = require('./models/cartModel');
 const CartItem = require('./models/cart-itemModel');
 
-Product.belongsTo(User , {constraints: true , onDelete: 'CASCADE'});
+//Product.belongsTo(User , {constraints: true , onDelete: 'CASCADE'});
+User.hasMany(Product);
 User.hasOne(Cart);
 Cart.belongsTo(User);
 Cart.belongsToMany(Product , { through: CartItem})
-Product.belongsToMany(CartItem , {through: CartItem })
+Product.belongsToMany(Cart , {through: CartItem })
 
 const adminRoutes = require('./routes/adminRoutes'); //adminRoutes and Products
 const userRoutes = require('./routes/userRoutes');
+const user = require('./models/userModel');
 
 server.set('view engine' , "ejs");
 server.set('views' , 'views');
@@ -48,6 +50,9 @@ sequelize.sync()
          })
          .then((user) => {
             console.log(user.id);
+            return user.createCart()
+         })
+         .then((data) => {
             server.listen(3000);
          })
          .catch(err => console.log(err));

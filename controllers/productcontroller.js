@@ -1,4 +1,6 @@
 const { render } = require('ejs');
+const cartItem = require('../models/cart-itemModel');
+const cart = require('../models/cartModel');
 const Product = require('../models/productModel');
 
 
@@ -18,14 +20,15 @@ exports.getAddProducts = (req,res, next) => {
 exports.getDetails = (req,res,next) =>{
     const pId = req.params.prodId;
     console.log(pId);
-    Product.findAll({where : { id : pId}})
+    Product.findAll({where : { id : pId }})
            .then((results) => {
                //console.log(results)
                 res.render('layouts/product-detail.ejs' , {
                     'pageTitle' : results[0].title,
                     'prodName' : results[0].title,
                     'prodPrice': results[0].price,
-                    'prodDesc': results[0].description
+                    'prodDesc': results[0].description,
+                    'prodId' : pId,
             })
            })
            .catch(err => console.log(err))
@@ -33,20 +36,11 @@ exports.getDetails = (req,res,next) =>{
 };
 
 exports.postAddProducts = (req,res) => {
-    //console.log(req.body);
-    //res.send("<h1>Products Added!</h1>");
-    // const prod = new Product(req.body.prodName , req.body.prodPrice, req.body.prodDescription);
-    // prod.save()
-    //     .then(() => {
-    //         res.redirect('/');
-    //     })
-    //     .catch(err => console.log(err));
-    //console.log(req.url);
-    Product.create({
-        title: req.body.prodName,
-        price: req.body.prodPrice,
-        description: req.body.prodDescription,
-        userId: req.user.id,
+    req.user
+    .createProduct({
+          title: req.body.prodName,
+          price: req.body.prodPrice,
+          description: req.body.prodDescription,
     })
     .then((resp) => {
         //console.log(resp);
@@ -56,9 +50,6 @@ exports.postAddProducts = (req,res) => {
 };
 
 exports.showProducts = (req,res) => {
-    //res.sendFile('../views/shopeHome.html');
-    //console.log(adminData.Products);
-    //res.sendFile(path.join(__dirname, '..' , 'views' , 'shopeHome.html'));
     const isAdmin = (req.url == '/list-products') ? true : false;
     Product.findAll()
            .then(results => {
@@ -101,32 +92,6 @@ exports.postEditProduct = (req,res) => {
         console.log('Product Updated!')
         res.redirect('/')
     }).catch(err => console.log(err))
-    // Product.findAll({where :{id : iEdit } })
-    //         .then(product=>{
-    //             product.update({
-    //                 'title' : req.body.prodName,
-    //                 'price': req.body.prodPrice,
-    //                 'description': req.body.prodDescription,
-    //             })
-    //         })
-    //         .catch(err => console.log(err));
-    // Product.update({
-    //     title : req.body.prodName,
-    //     price: req.body.prodPrice,
-    //     description: req.body.prodDescription,
-    // },
-    // {
-    //     where:{
-    //         id : idEdit
-    //     }
-    // })
-    // .then((resp) => {
-    //     //console.log(resp);
-    //     res.redirect('/');
-    // })
-    // .catch(err => console.log(err));
-    
-    //res.send('hello');
 }
 
 exports.deleteProduct = (req,res) => {
@@ -139,3 +104,51 @@ exports.deleteProduct = (req,res) => {
             })
             .catch(err => console.log(err))
 }
+
+exports.showCart = (req,res) => {
+    
+    req.user
+       .getCart()
+       .then((cart) => {
+           return cart.getProducts()
+       })
+       .then((products) => {
+        //console.log(products);
+        return res.render('layouts/cart' , {
+            pageTitle : 'Cart',
+            products: products 
+        })
+       .catch(err => console.log(err))
+    });
+}
+
+exports.addCart = (req,res) => {
+    const pId = req.params.prodId;
+    let fetchedCart;
+    req.user
+       .getCart()
+       .then((cart) => {
+           fetchedCart = cart
+           return cart.getProducts()
+       })
+       .then((products) => {
+           let product;
+           if(products > 0){
+            product = products[0]
+           }
+           let newQuantity = 1;
+           if(product){
+               //...
+           }
+           return Product.findByPk(pId)
+                         .then(product => {
+                            return fetchedCart.addProduct(product , { through: {quantity : newQuantity} })
+                         })
+                         .catch(err => console.log(err));
+       })
+       .then(() => {
+           console.log('check')
+       })
+       .catch(err => console.log(err))
+}
+

@@ -4,7 +4,9 @@ const productController = require('../controllers/productcontroller');
 
 userRoutes.get('/' , productController.showProducts);
 
-userRoutes.get('/product/getratings', )
+userRoutes.get('/cart' , productController.showCart);
+
+userRoutes.get('/product/addToCart/:prodId' , productController.addCart);
 
 userRoutes.get('/product/:prodId' , productController.getDetails);
 
