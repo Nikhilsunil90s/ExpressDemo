@@ -128,17 +128,21 @@ exports.addCart = (req,res) => {
     req.user
        .getCart()
        .then((cart) => {
-           fetchedCart = cart
-           return cart.getProducts()
+           fetchedCart = cart;
+           return cart.getProducts({where : {id : pId}})
        })
        .then((products) => {
            let product;
-           if(products > 0){
+           console.log('sdddddddddddddddddddddd');
+           
+           console.log(products)
+           if(products.length > 0){
             product = products[0]
            }
            let newQuantity = 1;
            if(product){
-               //...
+              newQuantity = product.cartItem.quantity + 1;
+              return fetchedCart.addProduct(product , { through: {quantity : newQuantity} })
            }
            return Product.findByPk(pId)
                          .then(product => {
@@ -148,6 +152,7 @@ exports.addCart = (req,res) => {
        })
        .then(() => {
            console.log('check')
+           res.redirect('/cart')
        })
        .catch(err => console.log(err))
 }

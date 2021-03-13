@@ -1,24 +1,25 @@
 <%- include('../includes/head') %>
 <%- include('../includes/navigation') %>
 
-
+<br>
 <% if(products.length > 0) { %>
-
-<div class="card">
-    <div class="card-header text-center">
-        <h1>
-            <%= product.title %>
-        </h1>
-        <pre> <%= product.description %> </pre>
-    </div>
-    <div class="card-body">
-        <img src="<%= imageSRC %>" alt="<%= product.prodName %>"/>
-    </div>
-    <div class="card-footer">
-        <h2>Price : <%= product.price %>
-        </h2>
-    </div>
-</div>
+    <% for (let product of products) { %>
+        <div class="card">
+            <div class="card-header text-center">
+                <h1>
+                    <%= product.title %>
+                </h1>
+                <pre> <%= product.description %> </pre>
+            </div>
+            
+            <div class="card-footer">
+                <h2>Price : <%= product.price %></h2>
+                <br>
+                <h2>Quantity: <%= product.cartItem.quantity %></h2>
+            </div>
+            <br>
+        </div>
+    <% } %>
 <% } else { %>
     <h3 class="text-center text-primary">No Products Yet!</h3>
 <% } %>
