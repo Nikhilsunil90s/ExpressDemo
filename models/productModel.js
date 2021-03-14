@@ -1,22 +1,42 @@
-const Sequelize = require('sequelize');
-const sequelize = require('../utils/database');
+// const Sequelize = require('sequelize');
+// const sequelize = require('../utils/database');
+const mongoose = require('mongoose');
 
-const Product = sequelize.define('Products' , {
-    id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
+const Schema = mongoose.Schema;
+
+const productSchema = new Schema({
+    title: {
+        type: String,
+        required: true
     },
-    title: Sequelize.STRING,
     price: {
-        type: Sequelize.DOUBLE,
-        allowNull: false,
+        type: Number,
+        required: true
     },
     description: {
-        type: Sequelize.STRING,
-        allowNull: false
-    }
+        type: String,
+        required: true
+    }    
 });
 
-module.exports = Product;
+module.exports = mongoose.model('Product' , productSchema);
+
+// const Product = sequelize.define('Products' , {
+//     id: {
+//         type: Sequelize.INTEGER,
+//         allowNull: false,
+//         autoIncrement: true,
+//         primaryKey: true,
+//     },
+//     title: Sequelize.STRING,
+//     price: {
+//         type: Sequelize.DOUBLE,
+//         allowNull: false,
+//     },
+//     description: {
+//         type: Sequelize.STRING,
+//         allowNull: false
+//     }
+// });
+
+// module.exports = Product;

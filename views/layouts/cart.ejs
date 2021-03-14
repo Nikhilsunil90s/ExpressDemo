@@ -16,6 +16,9 @@
                 <h2>Price : <%= product.price %></h2>
                 <br>
                 <h2>Quantity: <%= product.cartItem.quantity %></h2>
+                <br>
+                <a class="btn btn-success" href="/product/deleteFromCart/<%=product.id%>" >Delete Product</a>
+                <br>
             </div>
             <br>
         </div>
