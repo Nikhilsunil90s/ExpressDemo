@@ -4,13 +4,17 @@ const productController = require('../controllers/productcontroller');
 
 userRoutes.get('/' , productController.showProducts);
 
-// userRoutes.get('/cart' , productController.showCart);
+userRoutes.get('/cart' , productController.showCart);
 
-// userRoutes.get('/product/addToCart/:prodId' , productController.addCart);
+userRoutes.post('/postOrder' , productController.postOrder);
+
+userRoutes.get('/orderPage' , productController.getOrder);
+
+userRoutes.get('/product/addToCart/:prodId' , productController.addCart);
 
 userRoutes.get('/product/:prodId' , productController.getDetails);
 
-// userRoutes.get('/product/:prodId' , productController.getDetails);
+userRoutes.get('/product/:prodId' , productController.getDetails);
 
 module.exports = userRoutes;
 
