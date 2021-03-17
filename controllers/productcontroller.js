@@ -17,6 +17,8 @@ exports.getAddProducts = (req, res, next) => {
     })
 };
 
+
+
 exports.getDetails = (req, res, next) => {
     const pId = req.params.prodId;
     console.log(pId);
@@ -131,6 +133,9 @@ exports.getEditProduct = (req, res) => {
         .catch(err => console.log(err));
 }
 
+
+
+
 exports.postEditProduct = (req, res) => {
     const idEdit = req.params.prodId;
     console.log(req.body);
@@ -208,3 +213,20 @@ exports.addCart = (req, res) => {
         .catch(err => console.log(err))
 }
 
+exports.deleteFromCart = (req,res) => {
+    const pId = req.params.prodId;
+    let fetchedCart;
+    req.user
+        .getCart()
+        .then((cart)=>{
+            fetchedCart=cart;
+            return cart.getProducts({where : {id:pId}});
+        })
+        .then(product=>{
+            fetchedCart.removeProduct(product);
+            return res.redirect('/cart');
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+}

@@ -15,7 +15,11 @@
             <div class="card-footer">
                 <h2>Price : <%= product.price %></h2>
                 <br>
-                <h2>Quantity: <%= product.cartItem.quantity %></h2>
+                <span>Quantity : </span>
+                <a href="">-</a>
+                <input type="text" id="quantity" value="<%=product.cartItem.quantity%>">
+                <a href="">+</a>
+                <br>
                 <br>
                 <a class="btn btn-success" href="/product/deleteFromCart/<%=product.id%>" >Delete Product</a>
                 <br>
@@ -26,10 +30,16 @@
     <% } %>
     <div class="text-center">
         <form action="/postOrder" method="POST">
-            <button type="submit" class="btn">Order Now!</button>
+            <button type="submit" class="btn btn-primary">Order Now!</button>
         </form>
     </div>
 <% } else { %>
     <h3 class="text-center text-primary">No Products Yet!</h3>
 <% } %>
+
+<script>
+    
+</script>
+
 <%- include('../includes/end') %>
+
