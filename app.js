@@ -24,8 +24,8 @@ const getDb = require('./utils/database').getDb;
 // order.hasMany(Product);
 // Product.belongsToMany(order , {through: orderItem});
 
-//const adminRoutes = require('./routes/adminRoutes'); //adminRoutes and Products
-//const userRoutes = require('./routes/userRoutes');
+const adminRoutes = require('./routes/adminRoutes'); //adminRoutes and Products
+const userRoutes = require('./routes/userRoutes');
 //const user = require('./models/userModel');
 
 server.set('view engine' , "ejs");
@@ -40,10 +40,11 @@ server.use((req,res,next) => {
    //        next();
    //     })
    //     .catch(err => console.log(err))
+   next();
 });
 
-//server.use('/admin', adminRoutes);
-//server.use(userRoutes);
+server.use('/admin', adminRoutes);
+server.use(userRoutes);
 
 server.use(errorController.getError);
 

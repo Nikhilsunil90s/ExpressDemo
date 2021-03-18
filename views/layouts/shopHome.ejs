@@ -27,7 +27,7 @@
                                 
                                 <hr>
                     </li>
-                    <a type="btn btn-success" href="/product/<%= product.id %>">Details</a>
+                    <a type="btn btn-success" href="/product/<%= product._id %>">Details</a>
                     <% } %>
             </ul>
             <% } else { %>
@@ -55,10 +55,10 @@
                                     <div class="card-action">
                                         <div class="row text-center">
                                             <div class="col-6">
-                                                <a class="btn btn-info" href="/admin/edit/<%= product.id %>">Edit!</a>
+                                                <a class="btn btn-info" href="/admin/edit/<%= product._id %>">Edit!</a>
                                             </div>
                                             <div class="col-6">
-                                                <a class="btn btn-danger" href="/admin/delete/<%= product.id %>">Delete!</a>
+                                                <a class="btn btn-danger" href="/admin/delete/<%= product._id %>">Delete!</a>
                                             </div>
                                         </div>
                                     </div>
@@ -70,7 +70,7 @@
                                 
                                 <hr>
                     </li>
-                    <a type="btn btn-success" href="/product/<%= product.id %>">Details</a>
+                    <a type="btn btn-success" href="/product/<%= product._id %>">Details</a>
                     <% } %>
             </ul>
             <% } else { %>

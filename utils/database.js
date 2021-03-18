@@ -24,16 +24,19 @@ const MongoClient = mongodb.MongoClient;
 
 let _db;
 const getDb = () => {
-    return _db;
+    if (_db){
+        return _db;
+    }
+    throw "DB Not Created Yet!";
 }
 
 const mongoConnect = (callback) => {
-    MongoClient.connect('mongodb+srv://root:root1234@cluster0.kwluf.mongodb.net/Shop?retryWrites=true&w=majority')
+    MongoClient.connect('mongodb+srv://demo:demo1234@cluster0.kwluf.mongodb.net/Shop?retryWrites=true&w=majority')
            .then(clientObj => {
                console.log(clientObj);
                console.log('Connected!');
-               _db = clientObj.db(); 
-               callback(clientObj);
+               _db = clientObj.db(); // get current database
+               callback();
            })
            .catch((err) => {
                console.log(err)

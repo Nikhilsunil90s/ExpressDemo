@@ -22,14 +22,14 @@ exports.getAddProducts = (req, res, next) => {
 exports.getDetails = (req, res, next) => {
     const pId = req.params.prodId;
     console.log(pId);
-    Product.findByPk(pId)
+    Product.fetchById(pId)
         .then((results) => {
             console.log(results);
             res.render('layouts/product-detail.ejs', {
-                'pageTitle': results.title,
-                'prodName': results.title,
-                'prodPrice': results.price,
-                'prodDesc': results.description,
+                'pageTitle': results[0].title,
+                'prodName': results[0].title,
+                'prodPrice': results[0].price,
+                'prodDesc': results[0].description,
                 'prodId': pId,
             })
         })
@@ -66,14 +66,14 @@ exports.postOrder = (req, res) => {
 
 exports.getOrder = (req, res) => {
     req.user.getOrders()
-            .then(orders => {
-                console.log(orders);
-                res.render('layouts/orderPage', {
-                    pageTitle: 'orders',
-                    order: orders
-                })
+        .then(orders => {
+            console.log(orders);
+            res.render('layouts/orderPage', {
+                pageTitle: 'orders',
+                order: orders
             })
-    
+        })
+
 }
 
 exports.postAddProducts = (req, res) => {
@@ -88,12 +88,14 @@ exports.postAddProducts = (req, res) => {
     //            res.redirect('/')
     //        })
     //        .catch(err => console.log(err));
-    req.user
-        .createProduct({
-            title: req.body.prodName,
-            price: req.body.prodPrice,
-            description: req.body.prodDescription,
-        })
+    // req.user
+    //     .createProduct({
+    //         title: req.body.prodName,
+    //         price: req.body.prodPrice,
+    //         description: req.body.prodDescription,
+    //     })
+    const product = new Product(req.body.prodName, req.body.prodPrice, req.body.prodDescription)
+    product.save()
         .then((resp) => {
             //console.log(resp);
             res.redirect('/');
@@ -103,7 +105,7 @@ exports.postAddProducts = (req, res) => {
 
 exports.showProducts = (req, res) => {
     const isAdmin = (req.url == '/list-products') ? true : false;
-    Product.findAll()
+    Product.fetchAll()
         .then(products => {
             //console.log(results);
             res.render('layouts/shopHome', {
@@ -118,13 +120,13 @@ exports.showProducts = (req, res) => {
 
 exports.getEditProduct = (req, res) => {
     const idEdit = req.params.prodId;
-    Product.findByPk(idEdit)
+    Product.fetchById(idEdit)
         .then(product => {
             console.log(product[0].title);
             res.render('layouts/addProduct', {
                 'exist': true,
                 'pageTitle': 'Edit Product',
-                'prodId': product[0].id,
+                'prodId': product[0]._id,
                 'prodName': product[0].title,
                 'prodDesc': product[0].description,
                 'prodPrice': product[0].price,
@@ -139,7 +141,7 @@ exports.getEditProduct = (req, res) => {
 exports.postEditProduct = (req, res) => {
     const idEdit = req.params.prodId;
     console.log(req.body);
-    Product.findById(idEdit)
+    Product.fetchById(idEdit)
         .then(product => {
             product.title = req.body.prodName;
             product.price = req.body.prodPrice;
@@ -213,20 +215,20 @@ exports.addCart = (req, res) => {
         .catch(err => console.log(err))
 }
 
-exports.deleteFromCart = (req,res) => {
+exports.deleteFromCart = (req, res) => {
     const pId = req.params.prodId;
     let fetchedCart;
     req.user
         .getCart()
-        .then((cart)=>{
-            fetchedCart=cart;
-            return cart.getProducts({where : {id:pId}});
+        .then((cart) => {
+            fetchedCart = cart;
+            return cart.getProducts({ where: { id: pId } });
         })
-        .then(product=>{
+        .then(product => {
             fetchedCart.removeProduct(product);
             return res.redirect('/cart');
         })
-        .catch(err=>{
+        .catch(err => {
             console.log(err);
         })
 }
