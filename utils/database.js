@@ -15,7 +15,7 @@
 //     dialect: 'mysql',
 //     host: 'localhost'
 // });
-//8ou1lvQwMWDWtegF
+
 
 // module.exports = se;
 const mongodb = require('mongodb');

@@ -1,4 +1,5 @@
 const { render } = require('ejs');
+const mongodb = require('mongodb');
 const cartItem = require('../models/cart-itemModel');
 const cart = require('../models/cartModel');
 const Product = require('../models/productModel');
@@ -140,16 +141,30 @@ exports.getEditProduct = (req, res) => {
 
 exports.postEditProduct = (req, res) => {
     const idEdit = req.params.prodId;
-    console.log(req.body);
+    // console.log(req.body);
     Product.fetchById(idEdit)
-        .then(product => {
-            product.title = req.body.prodName;
-            product.price = req.body.prodPrice;
-            product.description = req.body.prodDescription;
-            product.save()
-            console.log('Product Updated!')
-            res.redirect('/')
-        }).catch(err => console.log(err))
+           .then(product => {
+               console.log(product);
+               const prod = new Product(req.body.prodName , req.body.prodPrice , req.body.prodDescription , mongodb.ObjectId(idEdit));
+               return prod.save();
+           })
+           .then((result) => {
+                res.redirect('/');
+           })
+           .catch(err => console.log(err));
+        //    .then(() => {
+        //        new Product()
+        //    })
+        // // .then(product => {
+        // //     product[0].title = req.body.prodName;
+        // //     product[0].price = req.body.prodPrice;
+        // //     product[0].description = req.body.prodDescription;
+        // //     console.log(product[0]);
+            
+        // //     product[0].save();
+        // //     console.log('Product Updated!')
+        // //     res.redirect('/')
+        // }).catch(err => console.log(err))
 }
 
 exports.deleteProduct = (req, res) => {
