@@ -127,6 +127,7 @@ exports.getEditProduct = (req, res) => {
             res.render('layouts/addProduct', {
                 'exist': true,
                 'pageTitle': 'Edit Product',
+                
                 'prodId': product[0]._id,
                 'prodName': product[0].title,
                 'prodDesc': product[0].description,
