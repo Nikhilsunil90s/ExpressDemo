@@ -2,8 +2,8 @@ const express = require('express');
 const errorController = require('./controllers/errorcontroller');
 const server = express();
 const mongoose = require('mongoose');
-const mongoConnect = require('./utils/database').mongoConnect;
-const getDb = require('./utils/database').getDb;
+// const mongoConnect = require('./utils/database').mongoConnect;
+// const getDb = require('./utils/database').getDb;
 
 // const Product = require('./models/productModel');
 // const User = require('./models/userModel');
@@ -48,10 +48,18 @@ server.use(userRoutes);
 
 server.use(errorController.getError);
 
-mongoConnect((client) => {
-   console.log(getDb());
-   server.listen(3000);
-});
+mongoose.connect('mongodb+srv://root:root1234@cluster0.kwluf.mongodb.net/Shop?retryWrites=true&w=majority')
+        .then((result) => {
+           console.log('Connected!')
+            server.listen(3000);
+        })
+        .catch(err => console.log(err));
+
+
+// mongoConnect((client) => {
+//    console.log(getDb());
+//    server.listen(3000);
+// });
 
 // mongoose.connect('mongodb+srv://specialUser:specialuser123@cluster0.kwluf.mongodb.net/Shop?retryWrites=true&w=majority')
 //         .then(result => {

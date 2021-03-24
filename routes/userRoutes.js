@@ -16,7 +16,7 @@ userRoutes.get('/' , productController.showProducts);
 
 userRoutes.get('/product/:prodId' , productController.getDetails);
 
-// userRoutes.get('/product/:prodId' , productController.getDetails);
+// // userRoutes.get('/product/:prodId' , productController.getDetails);
 
 module.exports = userRoutes;
 

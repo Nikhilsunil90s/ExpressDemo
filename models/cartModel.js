@@ -1,3 +1,21 @@
+// class cart{
+//     constructor(){
+
+//         // products
+//     }
+    
+// }
+
+
+
+
+
+
+
+
+
+
+
 // // const sql = require('sequelize');
 // // const sequelize = require('../utils/database');
 
