@@ -16,6 +16,11 @@ const product = new schema({
     description: {
         type: String,
         required: true,
+    },
+    userId: {
+        type: schema.Types.ObjectId, 
+        ref: 'User',
+        required: true,
     }
 }) // a model for a collection is created here
 

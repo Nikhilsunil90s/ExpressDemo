@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 // const getDb = require('./utils/database').getDb;
 
 // const Product = require('./models/productModel');
-// const User = require('./models/userModel');
+const User = require('./models/userModel');
 // const Cart = require('./models/cartModel');
 // const CartItem = require('./models/cart-itemModel');
 // const order = require('./models/orderModel');
@@ -34,13 +34,13 @@ server.set('views' , 'views');
 server.use(express.static('public'));
 
 server.use((req,res,next) => {
-   // User.findByPk(1)
-   //     .then((user) => {
-   //        req.user = user;
-   //        next();
-   //     })
-   //     .catch(err => console.log(err))
-   next();
+   User.findById("605c3e4a2389f802303ce423")
+       .then((user) => {
+          console.log(user);
+          req.user = user;
+          next();
+       })
+       .catch(err => console.log(err))
 });
 
 server.use('/admin', adminRoutes);
@@ -51,6 +51,22 @@ server.use(errorController.getError);
 mongoose.connect('mongodb+srv://root:root1234@cluster0.kwluf.mongodb.net/Shop?retryWrites=true&w=majority')
         .then((result) => {
            console.log('Connected!')
+            User.findOne()
+                .then(user => {
+                   if(!user) {
+                     const user = new User({
+                        name: 'Try',
+                        email: 'Try@email.com',
+                        cart: {
+                           items: []
+                        }
+                     });
+                     user.save();
+                   }
+                })
+                .catch(err => console.log(err));
+        })
+        .then(result => {
             server.listen(3000);
         })
         .catch(err => console.log(err));
