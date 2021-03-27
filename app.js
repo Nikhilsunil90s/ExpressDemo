@@ -34,7 +34,7 @@ server.set('views' , 'views');
 server.use(express.static('public'));
 
 server.use((req,res,next) => {
-   User.findById("605c3e4a2389f802303ce423")
+   User.findById("605edcbd42e5fa1bb8547321")
        .then((user) => {
           console.log(user);
           req.user = user;

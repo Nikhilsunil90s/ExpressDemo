@@ -1,12 +1,10 @@
-// class cart{
-//     constructor(){
+const mongoose = require('mongoose');
 
-//         // products
-//     }
-    
-// }
+const Schema = mongoose.Schema;
 
+const cart = new Schema();
 
+module.exports = mongoose.model('Cart',cart);
 
 
 
