@@ -7,21 +7,21 @@
         <div class="card">
             <div class="card-header text-center">
                 <h1>
-                    <%= product.title %>
+                    <%= product.productId.title %>
                 </h1>
-                <pre> <%= product.description %> </pre>
+                <pre> <%= product.productId.description %> </pre>
             </div>
             
             <div class="card-footer">
-                <h2>Price : <%= product.price %></h2>
+                <h2>Price : <%= product.productId.price %></h2>
                 <br>
                 <span>Quantity : </span>
-                <a href="">-</a>
-                <input type="text" id="quantity" value="<%=product.cartItem.quantity%>">
-                <a href="">+</a>
+                <!-- <a href="/decreaseQty/">-</a> -->
+                <input type="text" id="quantity" value="<%= product.quantity %>">
+                <!-- <a href="/increaseQty">+</a> -->
                 <br>
                 <br>
-                <a class="btn btn-success" href="/product/deleteFromCart/<%=product.id%>" >Delete Product</a>
+                <a class="btn btn-success" href="/product/deleteFromCart/<%= product.productId._id %>" >Delete Product</a>
                 <br>
             </div>
             <br>

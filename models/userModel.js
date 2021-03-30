@@ -45,11 +45,22 @@ user.methods.addToCart = function(product) {
     return this.save()
 }
 
+user.methods.deleteFromCart = function(pId) {
+    const updatedItems = this.cart.items.filter(cp => {
+        return cp.productId.toString() !== pId.toString()
+    });
+    this.cart.items = updatedItems;
+    // console.log(updatedCart);
+    console.log(this.cart.items);
+    return this.save();
+}
+
+user.methods.clearCart = function() {
+    this.cart.items = [];
+    this.save();
+}
 
 module.exports = mongoose.model('User',user)
-
-
-
 
 
 // const sql = require('sequelize');

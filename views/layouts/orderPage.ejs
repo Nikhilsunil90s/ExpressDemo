@@ -1,3 +1,13 @@
-<!-- <% for order of orders { %>
-    <h1><%= order %></h1>
-<% } %> -->
+<%- include('../includes/head') %>
+<%- include('../includes/navigation') %>
+
+<h1 style="text-align: center;">Orders Page!</h1>
+
+<% example.forEach((order) => { %>
+    <h2>Order # <%= order._id %></h2>
+    <% for(let op of order.products) { %>
+        <h3>Product : <%= op.product.title %> | Qty : <%=  op.quantity %></h3>
+    <% } %>
+<% }) %>
+
+<%- include('../includes/end') %>

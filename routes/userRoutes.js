@@ -6,13 +6,14 @@ userRoutes.get('/' , productController.showProducts);
 
 userRoutes.get('/cart' , productController.showCart);
 
-// userRoutes.post('/postOrder' , productController.postOrder);
+// userRoutes.get('/increaseQty')
+userRoutes.post('/postOrder' , productController.postOrder);
 
-// userRoutes.get('/orderPage' , productController.getOrder);
+userRoutes.get('/orderPage' , productController.getOrder);
 
 userRoutes.get('/product/addToCart/:prodId' , productController.addCart);
 
-// userRoutes.get('/product/deleteFromCart/:prodId' , productController.deleteFromCart);
+userRoutes.get('/product/deleteFromCart/:prodId' , productController.deleteFromCart);
 
 userRoutes.get('/product/:prodId' , productController.getDetails);
 
