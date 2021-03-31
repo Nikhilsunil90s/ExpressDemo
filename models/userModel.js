@@ -60,6 +60,20 @@ user.methods.clearCart = function() {
     this.save();
 }
 
+// user.methods.decreaseQuantity = function(pId) {
+//     const prodIndex = this.cart.items.findIndex(cp=>{
+//         return cp.productId.toString() === pId.toString()
+//     });
+//     this.cart.items[prodIndex].quantity -=1;
+//     // if(prod.quantity==1)
+//     // {
+
+//     // }
+//     // else    
+//         //prod.quantity = prod.quantity - 1;
+//     return this.save();
+//  }
+
 module.exports = mongoose.model('User',user)
 
 

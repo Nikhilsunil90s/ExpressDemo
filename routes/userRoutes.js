@@ -6,7 +6,7 @@ userRoutes.get('/' , productController.showProducts);
 
 userRoutes.get('/cart' , productController.showCart);
 
-// userRoutes.get('/increaseQty')
+userRoutes.get('/decreaseQty/:prodId',productController.decreaseQty);
 userRoutes.post('/postOrder' , productController.postOrder);
 
 userRoutes.get('/orderPage' , productController.getOrder);

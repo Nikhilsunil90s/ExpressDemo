@@ -97,7 +97,7 @@ exports.getOrder = (req, res) => {
         Order.find({ "user.userId" : req.user._id })
              .then((orders) => {
                  console.log(orders);
-                 res.render('layouts/orderPage' , { pageTitle : 'orders' , example : orders})
+                 res.render('layouts/order' , { pageTitle : 'orders' , example : orders})
              })
              .catch(err => console.log(err));
     }
@@ -263,9 +263,14 @@ exports.showCart = (req, res) => {
        .execPopulate()
        .then(result => {
         //    console.log(result.cart.items[0].productId);
+            let total = 0;
+            for (let product of req.user.cart.items)
+                 total = total + product.productId.price * product.quantity;
+
            res.render('layouts/cart',{
                 pageTitle : 'Cart',
                 products : result.cart.items,
+                total : total,
             })
        })
        .catch(err => console.log(err));
@@ -366,4 +371,28 @@ exports.deleteFromCart = (req, res) => {
 //         .catch(err => {
 //             console.log(err);
 //         })
+}
+
+exports.decreaseQty = (req,res) => {
+    const pId = req.params.prodId;
+
+    const prodIndex = req.user.cart.items.findIndex(cp=>{
+        return cp.productId.toString() === pId.toString()
+    });
+    if(req.user.cart.items[prodIndex].quantity ==1)
+    {
+        res.redirect('/product/deleteFromCart/' + pId);
+    }
+    else
+    {
+        req.user.cart.items[prodIndex].quantity -=1;
+        req.user.save();
+        res.redirect('/cart');
+    }
+
+    // req.user.decreaseQuantity(pId)
+    //         .then(()=>{
+    //             res.redirect('/cart')
+    //             })
+    //         .catch(err => console.log(err));
 }
