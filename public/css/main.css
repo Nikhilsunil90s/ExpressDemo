@@ -12,3 +12,8 @@
 a {
     cursor: grabbing;
 }
+
+.search-container {
+    position: absolute;
+    right: 2%;
+  }

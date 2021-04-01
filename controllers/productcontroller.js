@@ -396,3 +396,9 @@ exports.decreaseQty = (req,res) => {
     //             })
     //         .catch(err => console.log(err));
 }
+
+exports.login = (req,res) => {
+    res.render('layouts/login',{
+        pageTitle : 'Login',
+    });
+}

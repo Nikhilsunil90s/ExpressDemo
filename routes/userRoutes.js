@@ -17,6 +17,8 @@ userRoutes.get('/product/deleteFromCart/:prodId' , productController.deleteFromC
 
 userRoutes.get('/product/:prodId' , productController.getDetails);
 
+userRoutes.get('/login' , productController.login);
+
 // // userRoutes.get('/product/:prodId' , productController.getDetails);
 
 module.exports = userRoutes;
