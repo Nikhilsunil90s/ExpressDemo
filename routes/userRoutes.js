@@ -1,6 +1,12 @@
-const userRoutes = require('express').Router();
+const express = require('express')
+
+const userRoutes = express.Router();
 const path = require('path');
 const productController = require('../controllers/productcontroller');
+
+
+userRoutes.use(express.urlencoded({extended: true}))
+userRoutes.use(express.json());
 
 userRoutes.get('/' , productController.showProducts);
 
@@ -18,6 +24,10 @@ userRoutes.get('/product/deleteFromCart/:prodId' , productController.deleteFromC
 userRoutes.get('/product/:prodId' , productController.getDetails);
 
 userRoutes.get('/login' , productController.login);
+
+userRoutes.post('/search', productController.postSearch);
+
+// userRoutes.get('/:page' , productController.showPagedProducts);
 
 // // userRoutes.get('/product/:prodId' , productController.getDetails);
 

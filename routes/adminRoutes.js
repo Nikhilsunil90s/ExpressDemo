@@ -1,11 +1,13 @@
-const adminRoutes = require('express').Router();
+const express = require('express')
+const adminRoutes = express.Router();
+
 const path = require('path');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const productController = require('../controllers/productcontroller');
 
-adminRoutes.use(bodyParser.urlencoded({extended: true}));
+adminRoutes.use(express.urlencoded({extended: true}));
 
-adminRoutes.use(bodyParser.json());
+adminRoutes.use(express.json());
 
 adminRoutes.get('/addProduct' , productController.getAddProducts);
 
