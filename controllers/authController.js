@@ -1,5 +1,5 @@
 exports.getLogin = (req,res,next) => {
-    console.log(req.session.isLoggedIn);
+    // console.log(req.session.isLoggedIn);
     res.render('layouts/login' , {
         pageTitle: 'Login'
     })
@@ -16,6 +16,7 @@ exports.postLogin = (req,res,next) => {
 }
 
 exports.logout = (req,res) => {
-    res.clearCookie('loggedIn');
-    res.redirect('/');
+    req.session.destroy(() => {
+        res.redirect('/');
+    })
 }

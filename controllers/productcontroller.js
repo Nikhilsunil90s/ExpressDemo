@@ -38,8 +38,7 @@ exports.getDetails = (req, res, next) => {
                 'prodPrice': results.price,
                 'prodDesc': results.description,
                 'prodId': pId,
-                'isAuthenticated': req.cookies.loggedIn,
-
+                'isAuthenticated': req.session.isLoggedIn,
             })
         })
         .catch(err => console.log(err))
@@ -439,7 +438,6 @@ exports.decreaseQty = (req,res) => {
 exports.login = (req,res) => {
     res.render('layouts/login',{
         pageTitle : 'Login',
-
     });
 }
 
@@ -449,8 +447,9 @@ exports.postSearch = (req,res) => {
 
     console.log(req.body.search)   
 
-    Product.find({title : {$regex : req.body.search}})
+    Product.find({title : {$regex : /^[A-Z]/i}})
     .then((results) => {
+        console.log(results);
         res.render('layouts/shopHome', {
             'isAdmin': isAdmin,
             'pageTitle': 'ShopHome!!!!!!!!',
