@@ -307,7 +307,7 @@ exports.showCart = (req, res) => {
                 pageTitle : 'Cart',
                 products : result.cart.items,
                 total : total,
-                'isAuthenticated': req.cookies.loggedIn,
+                'isAuthenticated': req.session.isLoggedIn,
 
             })
        })

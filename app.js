@@ -56,9 +56,12 @@ server.use(express.static('public'));
 
 
 server.use((req, res, next) => {
-   User.findById("605edcbd42e5fa1bb8547321")
+   if(!req.session.user){
+      return next();
+   }
+   User.findById(req.session.user._id)
       .then((user) => {
-         console.log(user);
+         // console.log(user);
          req.user = user;
          next();
       })
