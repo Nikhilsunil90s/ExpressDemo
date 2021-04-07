@@ -4,6 +4,10 @@ const server = express();
 const mongoose = require('mongoose');
 const session = require('express-session');
 
+server.use(express.urlencoded({extended: true}));
+
+server.use(express.json());
+
 const Mongo_Uri = 'mongodb+srv://root:root1234@cluster0.kwluf.mongodb.net/Shop?retryWrites=true&w=majority'
 // const mongoConnect = require('./utils/database').mongoConnect;
 // const getDb = require('./utils/database').getDb;
@@ -77,22 +81,6 @@ server.use(errorController.getError);
 mongoose.connect('mongodb+srv://root:root1234@cluster0.kwluf.mongodb.net/Shop?retryWrites=true&w=majority')
    .then((result) => {
       console.log('Connected!')
-      User.findOne()
-         .then(user => {
-            if (!user) {
-               const user = new User({
-                  name: 'Try',
-                  email: 'Try@email.com',
-                  cart: {
-                     items: []
-                  }
-               });
-               user.save();
-            }
-         })
-         .catch(err => console.log(err));
-   })
-   .then(result => {
       server.listen(3000);
    })
    .catch(err => console.log(err));
