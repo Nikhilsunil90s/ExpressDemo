@@ -1,11 +1,11 @@
 const User = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 
-
 exports.getLogin = (req,res,next) => {
     // console.log(req.session.isLoggedIn);
+
     res.render('layouts/login' , {
-        pageTitle: 'Login'
+        pageTitle: 'Login',
     })
 };
 

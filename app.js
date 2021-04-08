@@ -3,14 +3,16 @@ const errorController = require('./controllers/errorcontroller');
 const server = express();
 const mongoose = require('mongoose');
 const session = require('express-session');
+const csrf = require('csurf');
+
+const csrfProtection = csrf();
 
 server.use(express.urlencoded({extended: true}));
 
 server.use(express.json());
 
 const Mongo_Uri = 'mongodb+srv://root:root1234@cluster0.kwluf.mongodb.net/Shop?retryWrites=true&w=majority'
-// const mongoConnect = require('./utils/database').mongoConnect;
-// const getDb = require('./utils/database').getDb;
+
 const MongoDbStore = require('connect-mongodb-session')(session);
 const store = new MongoDbStore({
    uri: Mongo_Uri,
@@ -28,30 +30,21 @@ server.use(session(
    }
 )
 );
-// const Product = require('./models/productModel');
+server.use(csrfProtection);
+
 const User = require('./models/userModel');
-// const Cart = require('./models/cartModel');
-// const CartItem = require('./models/cart-itemModel');
-// const order = require('./models/orderModel');
-// const orderItem = require('./models/order-itemModel');
 
-
-// Product.belongsTo(User , {constraints: true , onDelete: 'CASCADE'});
-// User.hasMany(Product);
-// User.hasOne(Cart);
-// Cart.belongsTo(User);
-// Cart.belongsToMany(Product , { through: CartItem});
-// Product.belongsToMany(Cart , {through: CartItem });
-// order.belongsTo(User);
-// User.hasMany(order);
-// order.hasMany(Product);
-// Product.belongsToMany(order , {through: orderItem});
+server.use((req,res,next) => {
+   console.log(res.locals);
+   res.locals.isAuthenticated = req.session.isLoggedIn;
+   res.locals.csrfToken = req.csrfToken();
+   next();
+})
 
 const adminRoutes = require('./routes/adminRoutes'); //adminRoutes and Products
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
 
-//const user = require('./models/userModel');
 
 server.set('view engine', "ejs");
 server.set('views', 'views');
@@ -72,6 +65,9 @@ server.use((req, res, next) => {
       .catch(err => console.log(err))
 });
 
+
+
+
 server.use('/auth', authRoutes);
 server.use('/admin', adminRoutes);
 server.use(userRoutes);
@@ -86,33 +82,5 @@ mongoose.connect('mongodb+srv://root:root1234@cluster0.kwluf.mongodb.net/Shop?re
    .catch(err => console.log(err));
 
 
-// mongoConnect((client) => {
-//    console.log(getDb());
-//    server.listen(3000);
-// });
-
-// mongoose.connect('mongodb+srv://specialUser:specialuser123@cluster0.kwluf.mongodb.net/Shop?retryWrites=true&w=majority')
-//         .then(result => {
-//                server.listen(3000)
-//         })
-//         .catch(err => console.log(err));
-// sequelize.sync({force: true})
-//          .then((result) => {
-//             return User.findByPk(1)
-//          })
-//          .then((user) => {
-//             if(!user){
-//                return User.create({name: 'TestName' , email: 'TestEmail@Email.com'}); 
-//             }
-//             return user;
-//          })
-//          .then((user) => {
-//             console.log(user.id);
-//             return user.createCart()
-//          })
-//          .then((data) => {
-//             server.listen(3000);
-//          })
-//          .catch(err => console.log(err));
 
 

@@ -8,6 +8,7 @@
 		<form action="/auth/signup" method="POST">
 			<h1>Create Account</h1>
 			<div class="social-container">
+				<input type="text" hidden name="_csrf" value="<%= csrfToken %>">
 				<a href="#" class="social"><i class="fa fa-facebook-official"></i></a>
 				<a href="#" class="social"><i class="fa fa-google-plus-official"></i></a>
 				<a href="#" class="social"><i class="fa fa-linkedin"></i></a>
@@ -23,6 +24,7 @@
 		<form action="/auth/login" method="POST">
 			<h1>Sign in</h1>
 			<div class="social-container">
+				<input type="text" hidden name="_csrf" value="<%= csrfToken %>">
 				<a href="#" class="social"><i class="fa fa-facebook-official"></i></a>
 				<a href="#" class="social"><i class="fa fa-google-plus-official"></i></a>
 				<a href="#" class="social"><i class="fa fa-linkedin"></i></a>

@@ -34,6 +34,7 @@
     <h2>Total : <%= total%></h2>
     <div class="text-center">
         <form action="/postOrder" method="POST">
+				<input type="text" hidden name="_csrf" value="<%= csrfToken %>">
             <button type="submit" class="btn btn-primary">Order Now!</button>
         </form>
     </div>
