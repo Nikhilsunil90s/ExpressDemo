@@ -2,7 +2,11 @@
 </head>
 <link rel="stylesheet" href="/css/login.css">
 <body>
-
+	<% if (errorMessage) { %>
+		<div>
+			<h3 style="text-align: center;color: red;"><%= errorMessage %></h3>
+		</div>
+	<% } %>
 <div class="container" id="container">
 	<div class="form-container sign-up-container">
 		<form action="/auth/signup" method="POST">
@@ -32,7 +36,7 @@
 			<span>or use your account</span>
 			<input type="email" placeholder="Email" name="email"/>
 			<input type="password" placeholder="Password" name="pwd"/>
-			<a href="#">Forgot your password?</a>
+			<a href="/auth/forgotPassword">Forgot your password?</a>
 			<input type="submit" class="btn btn-danger" value="Sign In!">
 		</form>
 	</div>

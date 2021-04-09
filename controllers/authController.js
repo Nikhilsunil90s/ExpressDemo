@@ -4,8 +4,11 @@ const bcrypt = require('bcryptjs');
 exports.getLogin = (req,res,next) => {
     // console.log(req.session.isLoggedIn);
 
+    let msg = req.flash('error');
+    msg = msg[0] ? msg[0] : null;
     res.render('layouts/login' , {
         pageTitle: 'Login',
+        errorMessage: msg
     })
 };
 
@@ -17,7 +20,8 @@ exports.postLogin = (req,res,next) => {
     User.findOne({email: email})
         .then(user => {
             if(!user){
-                return res.redirect('/login'); // for signup only
+                req.flash('error' , 'Invalid Email!');
+                return res.redirect('/auth/login'); // for signup only
             }
             return bcrypt.compare(password, user.password)
                   .then(doMatch => {
@@ -26,7 +30,7 @@ exports.postLogin = (req,res,next) => {
                         req.session.isLoggedIn = true;
                         return res.redirect('/')
                       }
-                      return res.redirect('/login');
+                      return res.redirect('/auth/login');
                   })
                   .catch(err => console.log(err))
         })
@@ -46,7 +50,7 @@ exports.postSignup = (req,res) => {
     User.findOne({email: email})
         .then(user => {
             if(user){
-                return res.redirect('/login')
+                return res.redirect('/auth/login')
             }
             return bcrypt.hash(password,12)
                   .then(hashedPassword => {
@@ -59,7 +63,7 @@ exports.postSignup = (req,res) => {
                         }
                     });
                     mainuser.save();
-                    return res.redirect('/login');
+                    return res.redirect('/auth/login');
                   })
                   .catch(err => console.log(err));
             
@@ -71,5 +75,11 @@ exports.postSignup = (req,res) => {
 exports.logout = (req,res) => {
     req.session.destroy(() => {
         res.redirect('/');
+    })
+}
+
+exports.forgotPassword = (req,res) =>{
+    res.render('/layouts/forgotPassword',{
+        'pageTitle' : "Forgot Password"
     })
 }

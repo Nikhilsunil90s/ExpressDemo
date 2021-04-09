@@ -4,7 +4,7 @@ const server = express();
 const mongoose = require('mongoose');
 const session = require('express-session');
 const csrf = require('csurf');
-
+const flash = require('connect-flash');
 const csrfProtection = csrf();
 
 server.use(express.urlencoded({extended: true}));
@@ -32,10 +32,11 @@ server.use(session(
 );
 server.use(csrfProtection);
 
+server.use(flash());
+
 const User = require('./models/userModel');
 
 server.use((req,res,next) => {
-   console.log(res.locals);
    res.locals.isAuthenticated = req.session.isLoggedIn;
    res.locals.csrfToken = req.csrfToken();
    next();
