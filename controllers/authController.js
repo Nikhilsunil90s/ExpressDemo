@@ -1,5 +1,17 @@
 const User = require('../models/userModel');
 const bcrypt = require('bcryptjs');
+const nodemailer = require('nodemailer');
+
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'iiceynr@gmail.com',
+        pass: 'webcomynr'
+    }
+});
+
+
 
 exports.getLogin = (req,res,next) => {
     // console.log(req.session.isLoggedIn);
@@ -63,10 +75,23 @@ exports.postSignup = (req,res) => {
                         }
                     });
                     mainuser.save();
+                    const mailOptions = {
+                        from: 'iiceynr@gmail.com',
+                        to: email,
+                        subject: 'Test Email via NodeMailer!',
+                        html: `<h1 style = "text-align:center; color: red;">Welcome To NodeShop!</h1>`,
+                      };
+                    transporter.sendMail(mailOptions , (err , info) => {
+                        if(err){
+                            console.log(err);
+                        }
+                        else{
+                            console.log(info);
+                        }
+                    });
                     return res.redirect('/auth/login');
                   })
                   .catch(err => console.log(err));
-            
         })
         .catch(err => console.log(err));
 }
@@ -79,7 +104,8 @@ exports.logout = (req,res) => {
 }
 
 exports.forgotPassword = (req,res) =>{
-    res.render('/layouts/forgotPassword',{
+    
+    res.render('layouts/forgotPassword',{
         'pageTitle' : "Forgot Password"
     })
 }

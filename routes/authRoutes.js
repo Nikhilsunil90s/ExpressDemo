@@ -10,7 +10,7 @@ authRoutes.get('/logout' , authController.logout);
 
 authRoutes.post('/signup' , authController.postSignup);
 
-authRoutes.post('/forgotPassword' , authController.forgotPassword);
+authRoutes.get('/forgotPassword' , authController.forgotPassword);
 
 
 
