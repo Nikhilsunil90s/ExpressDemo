@@ -1,6 +1,7 @@
 const User = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
+const crypto = require('crypto');
 
 
 const transporter = nodemailer.createTransport({
@@ -103,9 +104,67 @@ exports.logout = (req,res) => {
     })
 }
 
-exports.forgotPassword = (req,res) =>{
-    
+exports.getForgotPassword = (req,res) =>{
+    const erors = req.flash('error');
+    let message = '';
+    if(erors.length > 0){
+        message = erors[0];
+    }
     res.render('layouts/forgotPassword',{
-        'pageTitle' : "Forgot Password"
+        'pageTitle' : "Forgot Password",
+        'errorMessage': message,
     })
+}
+
+exports.postForgotPassword = (req,res) =>{    
+    const email = req.body.resetEmail;
+    crypto.randomBytes(32 , (err , buffer) => {
+        if(err){
+            console.log(err);
+        }
+        const token = buffer.toString('hex');
+        User.findOne({email: email})
+            .then(user => {
+                if(!user){
+                    req.flash('error' , 'No User with entered Email!');
+                    return res.redirect('/auth/forgotPassword');
+                }
+                user.resetToken = token;
+                user.resetTokenExpiration = new Date() * 3600000; // for 1 hour
+                return user.save();
+            })
+            .then(result => {
+                const mailOptions = {
+                    from: 'iiceynr@gmail.com',
+                    to: email,
+                    subject: 'Reset Passowrd Link!',
+                    html: `<h1 style = "text-align:center; color: red;">Welcome To NodeShop!</h1>
+                            <pre><a href='http://localhost:3000/auth/resetPassword/${token}'> Click Here </a> To Reset Your Password!</pre>`,
+                  };
+            
+                transporter.sendMail(mailOptions)
+                            .then(info => {
+                               console.log(info);     
+                            })
+                            .catch(err=>{
+                                console.log(err);
+                            });
+            })
+            .catch(err => console.log(err))
+    })
+    
+}
+
+exports.getresetPassword = (req,res) =>{
+    const token = req.params.token;
+    User.findOne({resetToken : token , resetTokenExpiration : {$gt: new Date()}})
+        .then(user => {
+            return res.render('layouts/resetPassword' , {
+                pageTitle: 'New Password Reset!',
+            })
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    // res.redirect('/auth/login');
 }

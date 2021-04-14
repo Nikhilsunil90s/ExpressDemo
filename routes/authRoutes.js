@@ -10,7 +10,15 @@ authRoutes.get('/logout' , authController.logout);
 
 authRoutes.post('/signup' , authController.postSignup);
 
-authRoutes.get('/forgotPassword' , authController.forgotPassword);
+authRoutes.get('/forgotPassword' , authController.getForgotPassword);
+
+authRoutes.post('/forgotPassword' , authController.postForgotPassword);
+
+authRoutes.get('/resetPassword/:token' , authController.getresetPassword);
+
+// authRoutes.post('/resetPassword' , authController.resetPassword);
+
+
 
 
 
