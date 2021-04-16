@@ -130,6 +130,7 @@ exports.postForgotPassword = (req,res) =>{
                     return res.redirect('/auth/forgotPassword');
                 }
                 user.resetToken = token;
+                console.log(new Date() * 3600000);
                 user.resetTokenExpiration = new Date() * 3600000; // for 1 hour
                 return user.save();
             })
@@ -157,14 +158,47 @@ exports.postForgotPassword = (req,res) =>{
 
 exports.getresetPassword = (req,res) =>{
     const token = req.params.token;
-    User.findOne({resetToken : token , resetTokenExpiration : {$gt: new Date()}})
+    // console.log(req.user);
+    User.findOne({resetToken : token , resetTokenExpiration: { $gt: Date.now() }})
         .then(user => {
+            // 5826805882300800000 , 5826805882308000000
+            console.log(user);
             return res.render('layouts/resetPassword' , {
                 pageTitle: 'New Password Reset!',
+                passwordToken: token,
+                userId: user._id,
             })
         })
         .catch(err => {
             console.log(err);
         })
     // res.redirect('/auth/login');
+}
+
+exports.postresetPassword = (req,res,next) => {
+    const pwdToken = req.body.passwordToken;
+    const newpassword = req.body.newPassword;
+    const userId = req.body.userId;
+    let resetUser;
+    User.findOne({resetToken: pwdToken , resetTokenExpiration : {$gt: Date.now() }, _id: userId})
+        .then(user => {
+            if(!user){
+                //do something , redirect
+            }
+            resetUser = user;
+            return bcrypt.hash(newpassword , 12)
+        })
+        .then(hashedPassword => {
+            resetUser.password = hashedPassword;
+            resetUser.resetToken = null;
+            resetUser.resetTokenExpiration = null;
+            return resetUser.save()
+        })
+        .then(result => {
+            console.log('Password Updated!');
+            res.redirect('/auth/login');
+        })
+        .catch(err => {
+            console.log(err);
+        })
 }

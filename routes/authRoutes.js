@@ -16,7 +16,7 @@ authRoutes.post('/forgotPassword' , authController.postForgotPassword);
 
 authRoutes.get('/resetPassword/:token' , authController.getresetPassword);
 
-// authRoutes.post('/resetPassword' , authController.resetPassword);
+authRoutes.post('/resetPassword' , authController.postresetPassword);
 
 
 
