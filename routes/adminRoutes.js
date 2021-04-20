@@ -13,7 +13,7 @@ adminRoutes.get('/addProduct' , productController.getAddProducts);
 
 adminRoutes.post('/addProduct' , productController.postAddProducts);
 
-adminRoutes.get('/list-products' , productController.showProducts);
+adminRoutes.get('/list-products' , productController.showAdminProducts);
 
 adminRoutes.get('/edit/:prodId' , productController.getEditProduct);
 

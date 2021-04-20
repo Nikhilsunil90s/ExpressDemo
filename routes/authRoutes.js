@@ -1,5 +1,6 @@
 const authRoutes = require('express').Router();
 const authController = require('../controllers/authController');
+const { check } = require('express-validator/check')
 
 
 authRoutes.get('/login' , authController.getLogin);
@@ -8,7 +9,7 @@ authRoutes.post('/login' , authController.postLogin);
 
 authRoutes.get('/logout' , authController.logout);
 
-authRoutes.post('/signup' , authController.postSignup);
+authRoutes.post('/signup' ,check("emailInput").isEmail().withMessage("Please Enter A Valid Email!") ,authController.postSignup);
 
 authRoutes.get('/forgotPassword' , authController.getForgotPassword);
 

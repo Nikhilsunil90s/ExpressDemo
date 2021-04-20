@@ -9,7 +9,7 @@
 	<% } %>
 <div class="container" id="container">
 	<div class="form-container sign-up-container">
-		<form action="/auth/signup" method="POST">
+		<form action="/auth/signup" method="POST" novalidate>
 			<h1>Create Account</h1>
 			<div class="social-container">
 				<input type="text" hidden name="_csrf" value="<%= csrfToken %>">
@@ -36,6 +36,11 @@
 			<span>or use your account</span>
 			<input type="email" placeholder="Email" name="email"/>
 			<input type="password" placeholder="Password" name="pwd"/>
+			
+				<input type="checkbox" name="rememberMe">
+				<label for="rememberMe">Remember Me</label> 
+			
+
 			<a href="/auth/forgotPassword">Forgot your password?</a>
 			<input type="submit" class="btn btn-danger" value="Sign In!">
 		</form>
