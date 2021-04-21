@@ -2,6 +2,9 @@ const express = require('express')
 const adminRoutes = express.Router();
 
 const path = require('path');
+const multer = require('multer');
+const upload = multer({dest: 'uploads/'});
+
 // const bodyParser = require('body-parser');
 const productController = require('../controllers/productcontroller');
 

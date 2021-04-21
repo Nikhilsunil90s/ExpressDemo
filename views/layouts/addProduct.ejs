@@ -8,7 +8,7 @@
     <hr>
     <div style="text-align: center;">
     <form action="<%if (!exist) {%> /admin/addProduct <%} else{ %> /admin/edit/<%= prodId %> <%}%>" method="POST">
-				<input type="text" hidden name="_csrf" value="<%= csrfToken %>">
+		<input type="text" hidden name="_csrf" value="<%= csrfToken %>">
         <input type="text" placeholder="Enter Product Name..." name="prodName" value="<%= prodName%>">
         <hr>
         <input type="text" placeholder="Enter Price" name="prodPrice" value="<%= prodPrice%>">

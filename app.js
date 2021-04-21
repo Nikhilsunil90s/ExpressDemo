@@ -34,6 +34,7 @@ server.use(csrfProtection);
 
 server.use(flash());
 
+
 const User = require('./models/userModel');
 
 server.use((req,res,next) => {

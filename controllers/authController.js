@@ -20,6 +20,7 @@ exports.getLogin = (req,res,next) => {
 
     let msg = req.flash('error');
     msg = msg[0] ? msg[0] : null;
+    console.log(msg);
     res.render('layouts/login' , {
         pageTitle: 'Login',
         errorMessage: msg
