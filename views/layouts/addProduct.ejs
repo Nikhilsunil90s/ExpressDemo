@@ -7,13 +7,14 @@
     <h1 style="text-align: center;color:aqua">Add Products To The Shop!</h1>
     <hr>
     <div style="text-align: center;">
-    <form action="<%if (!exist) {%> /admin/addProduct <%} else{ %> /admin/edit/<%= prodId %> <%}%>" method="POST">
-		<input type="text" hidden name="_csrf" value="<%= csrfToken %>">
+    <form action="/admin/addProduct/?_csrf=<%= csrfToken %>" enctype="multipart/form-data" method="POST">
         <input type="text" placeholder="Enter Product Name..." name="prodName" value="<%= prodName%>">
         <hr>
         <input type="text" placeholder="Enter Price" name="prodPrice" value="<%= prodPrice%>">
         <hr> 
         <input type="text" placeholder="Enter Description" name="prodDescription" value="<%= prodDesc%>">
+        <br>
+        <input type="file" name="prodFile">
         <br>
         <input type="submit" value="Okay!">
     </form>

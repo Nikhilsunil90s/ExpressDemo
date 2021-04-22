@@ -12,6 +12,7 @@ const escapeRegex = require('../public/js/regex-escape.js')
 exports.getAddProducts = (req, res, next) => {
     //res.sendFile(path.join(__dirname, '..' , 'views' , 'addProduct.html'));
     //console.log('In Get Add Controller');
+    console.log(res.locals);
     if(!req.user){
         return res.redirect('/login');
     }
@@ -88,7 +89,8 @@ exports.getOrder = (req, res) => {
 
 
 exports.postAddProducts = (req, res) => {
-
+    console.log(req.file);
+    // console.log(res.locals);
     Product.create({
         title: req.body.prodName,
         price: req.body.prodPrice,
